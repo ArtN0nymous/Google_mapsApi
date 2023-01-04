@@ -1,7 +1,9 @@
 import Reac,{useState,useEffect} from 'react';
 import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView,{Marker,Polyline} from 'react-native-maps';
+import {GOOGLE_MAPS_KEY} from "@env";
 export default function App() {
   const [state,setState]=useState({
     region: {
@@ -43,7 +45,8 @@ export default function App() {
       <MapView style={styles.map_container} initialRegion={state.region} showsUserLocation={true}>
         <Marker coordinate={state.origen} draggable onDragEnd={(location)=>setOrigen(location.nativeEvent.coordinate)}/>
         <Marker coordinate={state.destino} draggable onDragEnd={(location)=>setDestination(location.nativeEvent.coordinate)}/>
-        <Polyline coordinates={[state.origen,state.destino]}/>
+        <MapViewDirections origin={state.origen} destination={state.destino} apikey={GOOGLE_MAPS_KEY}/>
+        <Polyline coordinates={[state.origen,state.destino]} strokeColor='red' strokeWidth={5}/>
       </MapView>
     </View>
   );
